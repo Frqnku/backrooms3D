@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:44:36 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:58:15 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:25:54 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static void	check_map_last(void)
 		if (last_line[i] != '1' && !is_whitespace(last_line[i]))
 		{
 			free_map(g_data.file);
-			handle_error(MAPNOTEND);
+			if (last_line[i] == '0')
+				handle_error(BADWALLS);
+			else
+				handle_error(MAPNOTEND);
 		}
 		i++;
 	}
