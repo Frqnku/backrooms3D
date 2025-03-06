@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:56:18 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 15:02:42 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:22:01 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strdup(const char *s);
+int	    ft_isdigit(int c);
 int	    is_whitespace(char c);
 int     is_str_whitespace(char *str);
 

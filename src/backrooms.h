@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:44:44 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:18:03 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,22 @@ typedef struct s_texture
 	int			index;
 }				t_texture;
 
+typedef struct s_color
+{
+	char		*material;
+	int			red;
+	int			green;
+	int			blue;
+	int			index;
+}				t_color;
+
 typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_window;
 	t_map		map;
 	t_texture	textures[4];
+	t_color		colors[2];
 }				t_data;
 
 extern t_data	g_data;
@@ -61,6 +71,10 @@ extern t_data	g_data;
 # define BADTEXTURE "couldn't read texture"
 # define MISSINGTEXTURE "texture missing"
 # define DOUBLETEXTURES "too many textures for an orientation"
+# define BADCOLOR "bad color syntax"
+# define BADNUMBERCOLOR "color must be between 0 and 255"
+# define MISSINGCOLOR "color missing"
+# define DOUBLECOLORS "too many color for a material"
 # define BADFILE "file has too many lines"
 # define BADFILECHAR "file contains bad characters"
 # define MAPNOTEND "map is not at the end of file"
@@ -86,20 +100,23 @@ extern t_data	g_data;
 /* Cleanup */
 void			cleanup(void);
 void			clean_textures_path(void);
+void			clean_colors(void);
 // int				on_destroy(void);
 
 /* Error */
 void			handle_error(char *err);
 void			handle_file_error(char *err, int fd);
 void			handle_textures_error(char *err);
-void			handle_gnl_error(char *err, char *line, int fd);
-void			handle_fd_error(char *err, int fd);
+void			handle_colors_error(char *err);
+
 
 /* Parsing */
 void			check_args(int ac, char **av);
 void			check_map(char *map);
 void			check_textures(void);
 void			initialize_textures_paths(void);
+void			check_colors(void);
+void			initialize_colors(void);
 void			check_file_chars(void);
 
 #endif

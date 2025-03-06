@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:22:32 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:05:53 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:10:33 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,8 @@ void	handle_textures_error(char *err)
 	handle_error(err);
 }
 
-void	handle_gnl_error(char *err, char *line, int fd)
+void	handle_colors_error(char *err)
 {
-	close(fd);
-	free(line);
-	get_next_line(-1);
-	handle_error(err);
-}
-
-void	handle_fd_error(char *err, int fd)
-{
-	close(fd);
-	handle_error(err);
+	clean_colors();
+	handle_textures_error(err);
 }

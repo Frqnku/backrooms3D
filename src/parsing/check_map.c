@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:54:42 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:55:51 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:39:17 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void	check_map(char *map)
 	initialize_file(map);
 	check_map_last();
 	check_textures();
+	check_colors();
 	check_file_chars();
 }

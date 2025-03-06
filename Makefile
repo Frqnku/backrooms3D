@@ -12,7 +12,7 @@ RESET   = \033[0m
 
 # Files
 UTILS = $(addprefix utils/, handle_errors.c cleanup.c)
-PARSING = $(addprefix parsing/, check_args.c check_map.c check_textures.c initialize_textures_paths.c check_file_chars.c)
+PARSING = $(addprefix parsing/, check_args.c check_map.c check_textures.c initialize_textures_paths.c check_file_chars.c initialize_colors.c check_colors.c)
 RENDER = 
 GAMEPLAY = 
 SRCS = $(addprefix src/, main.c $(UTILS) $(PARSING) $(RENDER) $(GAMEPLAY))

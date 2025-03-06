@@ -6,12 +6,25 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:00 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:05:51 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:31:02 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../backrooms.h"
 #include <stdio.h>
+
+void	clean_colors(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (g_data.colors[i].material)
+			free(g_data.colors[i].material);
+		i++;
+	}
+}
 
 void	clean_textures_path(void)
 {
@@ -31,5 +44,6 @@ void	clean_textures_path(void)
 void	cleanup(void)
 {
 	clean_textures_path();
+	clean_colors();
 	free_map(g_data.map.file);
 }
