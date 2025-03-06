@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:34:34 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:19:40 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:58:27 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	check_file_chars(void)
 			continue ;
 		if (is_color_index(i))
 			continue ;
-		if (!is_str_whitespace(g_data.map.file[i]))
+		if (!is_str_whitespace(g_data.file[i]))
 			handle_colors_error(BADFILECHAR);
 	}
 }

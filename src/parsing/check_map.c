@@ -6,13 +6,18 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:54:42 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:49:14 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:54:04 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../backrooms.h"
 
-void	check_map(void)
+static void	initialize_map(void)
 {
 	
+}
+
+void	check_map(void)
+{
+	intialize_map();
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intialize_file.c                                   :+:      :+:    :+:   */
+/*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:44:36 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:47:43 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:58:15 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	check_map_last(void)
 	int		i;
 
 	i = 0;
-	last_line = g_data.map.file[g_data.map.end_index];
+	last_line = g_data.file[g_data.map.end_index];
 	while (last_line[i])
 	{
 		if (last_line[i] != '1' && !is_whitespace(last_line[i]))
 		{
-			free_map(g_data.map.file);
+			free_map(g_data.file);
 			handle_error(MAPNOTEND);
 		}
 		i++;
@@ -37,7 +37,7 @@ static int	find_map_start_index(void)
 	i = g_data.map.end_index;
 	while (i > 0)
 	{
-		if (is_str_whitespace(g_data.map.file[i]))
+		if (is_str_whitespace(g_data.file[i]))
 			return (i + 1);
 		i--;
 	}
@@ -48,10 +48,10 @@ static int	find_last_line_index(void)
 {
 	int	i;
 
-	i = get_tab_size(g_data.map.file) - 1;
+	i = get_tab_size(g_data.file) - 1;
 	while (i > 0)
 	{
-		if (!is_str_whitespace(g_data.map.file[i]))
+		if (!is_str_whitespace(g_data.file[i]))
 			return (i);
 		i--;
 	}
@@ -71,13 +71,13 @@ static void	initialize_file(char *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		g_data.map.file[i++] = ft_strdup(line);
+		g_data.file[i++] = ft_strdup(line);
 		free(line);
 		if (i == MAX_ROW)
 			handle_file_error(BADFILE, fd);
 		line = get_next_line(fd);
 	}
-	g_data.map.file[i] = NULL;
+	g_data.file[i] = NULL;
 	g_data.map.end_index = find_last_line_index();
 	g_data.map.start_index = find_map_start_index();
 	close(fd);

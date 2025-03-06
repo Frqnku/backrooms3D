@@ -6,12 +6,11 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:31:01 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:33:39 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:59:58 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../backrooms.h"
-#include <stdio.h>
 
 static void	parse_colors(t_color *color, char *str)
 {
@@ -52,9 +51,9 @@ static t_color	add_color(char *material, int i, int j)
 	color.green = -1;
 	color.blue = -1;
 	j += 1;
-	while (is_whitespace(g_data.map.file[i][j]))
+	while (is_whitespace(g_data.file[i][j]))
 		j++;
-	values = ft_strtrim(g_data.map.file[i] + j, " \n\t\v\r\f");
+	values = ft_strtrim(g_data.file[i] + j, " \n\t\v\r\f");
 	parse_colors(&color, values);
 	if (!ft_strncmp("F", material, 1))
 		color.material = ft_strdup("F");
@@ -75,12 +74,12 @@ static t_color	find_color(char *material)
 	color.green = -1;
 	color.blue = -1;
 	color.index = -1;
-	while (g_data.map.file[i])
+	while (g_data.file[i])
 	{
 		j = 0;
-		while (is_whitespace(g_data.map.file[i][j]))
+		while (is_whitespace(g_data.file[i][j]))
 			j++;
-		if (!ft_strncmp(&g_data.map.file[i][j], material, 1))
+		if (!ft_strncmp(&g_data.file[i][j], material, 1))
 		{
 			color = add_color(material, i, j);
 			break ;

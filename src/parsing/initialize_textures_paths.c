@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:43:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:05:45 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:59:07 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_texture	add_texture(char *orientation, int i, int j)
 	texture.path = NULL;
 	texture.orientation = NULL;
 	j += 1;
-	while (is_whitespace(g_data.map.file[i][j]))
+	while (is_whitespace(g_data.file[i][j]))
 		j++;
-	texture.path = ft_strtrim(g_data.map.file[i] + j + 1, " \n\t\v\r\f");
+	texture.path = ft_strtrim(g_data.file[i] + j + 1, " \n\t\v\r\f");
 	if (!ft_strncmp("NO", orientation, 2))
 		texture.orientation = ft_strdup("NO");
 	if (!ft_strncmp("SO", orientation, 2))
@@ -44,12 +44,12 @@ static t_texture	find_texture(char *orientation)
 	texture.path = NULL;
 	texture.orientation = NULL;
 	texture.index = -1;
-	while (g_data.map.file[i])
+	while (g_data.file[i])
 	{
 		j = 0;
-		while (is_whitespace(g_data.map.file[i][j]))
+		while (is_whitespace(g_data.file[i][j]))
 			j++;
-		if (!ft_strncmp(&g_data.map.file[i][j], orientation, 2))
+		if (!ft_strncmp(&g_data.file[i][j], orientation, 2))
 		{
 			texture = add_texture(orientation, i, j);
 			break ;

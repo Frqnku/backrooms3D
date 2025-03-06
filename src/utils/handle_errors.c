@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:22:32 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:10:33 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:59:37 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	handle_file_error(char *err, int fd)
 {
 	close(fd);
 	get_next_line(-1);
-	free_map(g_data.map.file);
+	free_map(g_data.file);
 	handle_error(err);
 }
 
 void	handle_textures_error(char *err)
 {
 	clean_textures_path();
-	free_map(g_data.map.file);
+	free_map(g_data.file);
 	handle_error(err);
 }
 

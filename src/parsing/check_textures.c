@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:37:33 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/05 17:56:29 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:59:18 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	check_double_textures(void)
 	while (i < 4)
 	{
 		j = g_data.textures[i].index + 1;
-		while (g_data.map.file[j])
+		while (g_data.file[j])
 		{
 			k = 0;
-			while (is_whitespace(g_data.map.file[j][k]))
+			while (is_whitespace(g_data.file[j][k]))
 				k++;
-            if (!ft_strncmp(&g_data.map.file[j][k],
+            if (!ft_strncmp(&g_data.file[j][k],
 				g_data.textures[i].orientation, 2))
 				handle_textures_error(DOUBLETEXTURES);
 			j++;

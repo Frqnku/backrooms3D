@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:49:31 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:57:27 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 typedef struct s_map
 {
-	char		*file[4096];
 	char		*map[2048];
 	char		orientation;
 	int			end_index;
@@ -55,6 +54,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_window;
+	char		*file[4096];
 	t_map		map;
 	t_texture	textures[4];
 	t_color		colors[2];

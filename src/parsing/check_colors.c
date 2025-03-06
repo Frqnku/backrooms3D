@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:06:36 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:34:08 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:58:41 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	check_double_colors(void)
 	while (i < 2)
 	{
 		j = g_data.colors[i].index + 1;
-		while (g_data.map.file[j])
+		while (g_data.file[j])
 		{
 			k = 0;
-			while (is_whitespace(g_data.map.file[j][k]))
+			while (is_whitespace(g_data.file[j][k]))
 				k++;
-			if (!ft_strncmp(&g_data.map.file[j][k], g_data.colors[i].material,
+			if (!ft_strncmp(&g_data.file[j][k], g_data.colors[i].material,
 					1))
 				handle_colors_error(DOUBLECOLORS);
 			j++;
