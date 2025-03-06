@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:18:03 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:49:31 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,12 @@ void			handle_colors_error(char *err);
 
 /* Parsing */
 void			check_args(int ac, char **av);
-void			check_map(char *map);
+void			check_file(char *map);
 void			check_textures(void);
 void			initialize_textures_paths(void);
 void			check_colors(void);
 void			initialize_colors(void);
 void			check_file_chars(void);
+void			check_map(void);
 
 #endif
