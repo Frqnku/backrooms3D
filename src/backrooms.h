@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:57:27 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:39:38 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_map
 	char		orientation;
 	int			end_index;
 	int			start_index;
+	int			size;
 }				t_map;
 
 typedef struct s_texture
@@ -108,7 +109,7 @@ void			handle_error(char *err);
 void			handle_file_error(char *err, int fd);
 void			handle_textures_error(char *err);
 void			handle_colors_error(char *err);
-
+void			handle_map_error(char *err);
 
 /* Parsing */
 void			check_args(int ac, char **av);

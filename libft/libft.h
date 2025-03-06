@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:56:18 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:22:01 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:31:04 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_map(char **arr);
 int	    get_tab_size(char **tab);
 int		get_char_index(const char *s, char c);
 char	*ft_strtrim(const char *s1, const char *set);
+char	*ft_strtrim_end(const char *s1, const char *set);
 
 /* GNL */
 char	*get_next_line(int fd);
