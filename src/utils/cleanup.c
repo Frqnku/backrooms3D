@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:00 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:59:50 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:20:48 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ void	cleanup(void)
 	clean_textures_path();
 	clean_colors();
 	free_map(g_data.file);
+	free_map(g_data.map.map);
 }

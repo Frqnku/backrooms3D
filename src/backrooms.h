@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 15:39:38 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:20:42 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ extern t_data	g_data;
 # define BADMAP "map is too big"
 # define BADCHAR "map contains unvalid characters"
 # define BADWALLS "map must be surrounded by walls"
+# define DOUBLEORIENTATION "too many orientation in map"
+# define NOORIENTATION "no orientation was found to start"
 
 /* Keys */
 # define KEY_W 119
@@ -120,5 +122,12 @@ void			check_colors(void);
 void			initialize_colors(void);
 void			check_file_chars(void);
 void			check_map(void);
+void			check_borders(char **map);
+void			check_orientation(char **map);
+
+/* Utils */
+int				is_orientation(char c);
+int				is_floor(char c);
+int				is_wall(char c);
 
 #endif
