@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:54:42 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/08 14:39:32 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:42:15 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static void	check_body(char **map)
 			if (is_floor(map[y][x]) && (map[y - 1][x] == ' ' || map[y
 					+ 1][x] == ' '))
 				handle_map_error(BADWALLS);
-			if (map[y][x] == ' ' && map[y][x - 1] != ' ' && !is_wall(map[y][x - 1]))
+			if (map[y][x] == ' ' && map[y][x - 1] != ' ' && !is_wall(map[y][x
+					- 1]))
 				handle_map_error(BADWALLS);
 			if (map[y][x] == ' ')
 				(find_wall(map, y, x, -1), find_wall(map, y, x, +1));

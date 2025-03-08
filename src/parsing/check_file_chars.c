@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:34:34 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:58:27 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:47:48 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	is_texture_index(int i)
 
 void	check_file_chars(void)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < g_data.map.start_index)
