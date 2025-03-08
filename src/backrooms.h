@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/08 14:20:42 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:39:21 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ extern t_data	g_data;
 
 /* Map infos */
 # define MAX_ROW 4095
+# define MAX_ROW_MAP 2046
 
 /* Cleanup */
 void			cleanup(void);

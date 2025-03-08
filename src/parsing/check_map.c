@@ -6,7 +6,7 @@
 /*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:54:42 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/08 14:14:04 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:39:32 by utiberto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	initialize_map(void)
 	j = g_data.map.start_index;
 	while (j <= g_data.map.end_index)
 	{
-		if (i == MAX_ROW)
+		if (i == MAX_ROW_MAP)
 			handle_map_error(BADMAP);
 		g_data.map.map[i++] = ft_strtrim_end(g_data.file[j++], " \n\t\v\r\f");
 	}
