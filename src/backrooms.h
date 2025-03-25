@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backrooms.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/08 14:39:21 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:32:21 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # ifndef BONUS
 #  define BONUS 0
 # endif
+
+typedef struct s_player
+{
+	int			coor[2];
+}				t_player;
 
 typedef struct s_map
 {
@@ -56,6 +61,7 @@ typedef struct s_data
 	void		*mlx;
 	void		*mlx_window;
 	char		*file[4096];
+	t_player	player;
 	t_map		map;
 	t_texture	textures[4];
 	t_color		colors[2];
