@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/25 14:32:21 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:56:29 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
+# include <math.h>
 # include <mlx/mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,9 +27,19 @@
 #  define BONUS 0
 # endif
 
+typedef int		key;
+
 typedef struct s_player
 {
-	int			coor[2];
+	float		coor[2];
+	key			w;
+	key			s;
+	key			a;
+	key			d;
+	key			l_arr;
+	key			r_arr;
+	
+	float		view;
 }				t_player;
 
 typedef struct s_map
@@ -60,7 +71,12 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_window;
+	void		*mlx_img;
+	char		*screen;
 	char		*file[4096];
+	int			bits_pr_pxl;
+	int			line_length;
+	int			endian;
 	t_player	player;
 	t_map		map;
 	t_texture	textures[4];
@@ -103,9 +119,22 @@ extern t_data	g_data;
 # define ARROW_LEFT 65361
 # define ARROW_RIGHT 65363
 
+/* Player defines */
+# define X 0
+# define Y 1
+# define PI 3.14159265359
+# define PRESSED 1
+# define RELEASED 0
+# define SPEED 3
+
 /* Map infos */
+# define TILE_SIZE 64
 # define MAX_ROW 4095
 # define MAX_ROW_MAP 2046
+
+/* Game infos */
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 /* Cleanup */
 void			cleanup(void);
@@ -136,5 +165,6 @@ void			check_orientation(char **map);
 int				is_orientation(char c);
 int				is_floor(char c);
 int				is_wall(char c);
+int				tblotbl_len(char **tbl);
 
 #endif

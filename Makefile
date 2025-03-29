@@ -11,7 +11,7 @@ CYAN    = \033[36m
 RESET   = \033[0m
 
 # Files
-UTILS = $(addprefix utils/, handle_errors.c cleanup.c)
+UTILS = $(addprefix utils/, handle_errors.c cleanup.c utils.c )
 PARSING = $(addprefix parsing/, check_args.c check_file.c check_map.c check_textures.c initialize_textures_paths.c check_file_chars.c initialize_colors.c check_colors.c check_map2.c utils.c)
 RENDER = 
 GAMEPLAY = 
@@ -23,8 +23,8 @@ LIBFT = libft/libft.a
 MLX = mlx/libmlx_Linux.a
 
 # Flags
-CFLAGS = -Wall -Wextra -Werror
-MLXFLAGS = -lXext -lX11 -lm -lbsd
+CFLAGS = # -Wall -Wextra -Werror
+MLXFLAGS = -ffast-math -lXext -lX11 -lm -lz -lbsd
 
 # Rules	
 all: $(LIBFT) $(MLX) $(NAME)
