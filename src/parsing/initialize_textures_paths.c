@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_textures_paths.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:43:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/06 14:59:07 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/04/03 09:53:37 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ static t_texture	find_texture(char *orientation)
 	int			j;
 
 	i = 0;
+	texture.bits_pr_pxl = 0;
+	texture.endian = 0;
+	texture.line_length = 0;
+	texture.addr = NULL;
+	texture.spr = NULL;
 	texture.path = NULL;
 	texture.orientation = NULL;
 	texture.index = -1;

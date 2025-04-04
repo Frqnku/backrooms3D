@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:20:26 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/29 17:46:33 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:40:58 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,33 @@
 #include <stdio.h>
 
 t_data	g_data;
+int 	spr_size = 32;
+
+void find_spawn_coor()
+{
+	char **map = g_data.map.map;
+	int i;
+	int j;
+	int len;
+
+	i = -1;
+	j = -1;
+	len = tblotbl_len(map);
+	while (++i < len)
+	{
+		while (++j < ft_strlen(map[i]))
+		{
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'O' || map[i][j] == 'E')
+			{
+				g_data.player.coor[X] = j * TILE_SIZE;		
+				g_data.player.coor[Y] = i * TILE_SIZE;
+				break ;
+			}
+			j++;
+		}
+		j = -1;
+	}
+}
 
 int	destroy_game(t_data *data)
 {
@@ -78,7 +105,11 @@ int wall_col(float obj_x, float obj_y)
 	scaled_x = obj_x / TILE_SIZE;
 	scaled_y = obj_y / TILE_SIZE;
 	if (g_data.map.map[scaled_y][scaled_x] == '1')
+	{	
+		//printf("scx: %d | scy: %d\n", scaled_x, scaled_y);
+		//printf("x: %f | y: %f\n", obj_x - scaled_x * TILE_SIZE, obj_y - scaled_y * TILE_SIZE);
 		return (1);
+	}
 	return (0);
 }
 
@@ -93,17 +124,27 @@ void put_pixel(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void init_textures()
+{
+	g_data.textures[0].spr = mlx_xpm_file_to_image(g_data.mlx, g_data.textures[0].path, &spr_size, &spr_size);
+	if (g_data.textures[0].spr == NULL)
+		cleanup();
+	g_data.textures[0].addr = mlx_get_data_addr(g_data.textures[0].spr, &g_data.textures[0].bits_pr_pxl, &g_data.textures[0].line_length, &g_data.textures[0].endian);
+	if (g_data.textures[0].addr == NULL)
+		cleanup();
+}
+
 void init_data(int ac, char **av)
 {
-	g_data.player.coor[X] = 300;
-	g_data.player.coor[Y] = 300;
+	check_args(ac, av);
+	find_spawn_coor();
 	g_data.player.w = RELEASED;
 	g_data.player.s = RELEASED;
 	g_data.player.a = RELEASED;
 	g_data.player.d = RELEASED;
 	g_data.player.l_arr = RELEASED;
 	g_data.player.r_arr = RELEASED;
-	g_data.player.view = PI;
+	g_data.player.view = PI / 3 * 2;
 	g_data.mlx = NULL;
 	g_data.mlx_window = NULL;
 	g_data.mlx_img = NULL;
@@ -111,8 +152,8 @@ void init_data(int ac, char **av)
 	g_data.bits_pr_pxl = 0;
 	g_data.line_length = 0;
 	g_data.endian = 0;
-	check_args(ac, av);
 	g_data.mlx = mlx_init();
+	init_textures();
 	if (!g_data.mlx)
 		destroy_game(&g_data);
 	g_data.mlx_window = mlx_new_window(g_data.mlx, WIN_WIDTH, WIN_HEIGHT,
@@ -196,7 +237,6 @@ float find_norm(float x1, float x2, float y1, float y2)
 	delta_y = y2 - y1;
 	view = atan2(delta_y, delta_x) - g_data.player.view;
 	fixed_norm = sqrt(delta_x * delta_x + delta_y * delta_y) * cos(view);
-	printf("%f\n", fixed_norm);
 	return (fixed_norm);
 }
 
@@ -217,17 +257,26 @@ void draw_fov(float start_x, int i)
 	ray_y = g_data.player.coor[Y];
 	while (!wall_col(ray_x, ray_y))
 	{	
-		//put_pixel(ray_x, ray_y, 0x0000FF);
+		if (DEBUG)
+			put_pixel(ray_x, ray_y, 0x0000FF);
 		ray_x += cos_value;
 		ray_y += sin_value;
 	}
 	norm = find_norm(g_data.player.coor[X], ray_x, g_data.player.coor[Y], ray_y);
-	height = TILE_SIZE / norm * (WIN_WIDTH / 2);
+	height = TILE_SIZE / norm * (WIN_WIDTH / 1.1);
 	start_y =  (WIN_HEIGHT - height) / 2;
 	end = start_y + height;
 	while (start_y < end)
 	{
-		put_pixel(i, start_y, 0x0000FF);
+		//printf("%d\n", ((int)start_y) % 32);
+		if (!DEBUG)
+		{
+			// if (start_y < 0)
+			// 	put_pixel(i, start_y, *(int *)(g_data.textures[0].addr + (0 * g_data.textures[0].line_length + i / 32 * (g_data.textures[0].bits_pr_pxl / 8))));
+			// else
+			// 	put_pixel(i, start_y, *(int *)(g_data.textures[0].addr + ((int)start_y % 32 * g_data.textures[0].line_length + i % 32 * (g_data.textures[0].bits_pr_pxl / 8))));
+			put_pixel(i, start_y, 0xFF0000);
+		}
 		start_y++;
 	}
 	
@@ -241,44 +290,47 @@ void move_player(t_player *player)
 	cos_value = cos(player->view);
 	sin_value = sin(player->view);
 	if (player->l_arr == PRESSED)
-		player->view -= 0.01;
+		player->view -= ROTATE_SPEED;
 	if (player->r_arr == PRESSED)
-		player->view += 0.01;
-	else if (player->view > 2 * PI)
+		player->view += ROTATE_SPEED;
+	if (player->view > 2 * PI)
 		player->view = 0;
 	if (player->view < 0)
 		player->view = 2 * PI;
-	if (player->w == PRESSED) // && !wall_col(player->coor[X] + sin_value * SPEED, player->coor[Y] + cos_value * SPEED))
+	if (player->w == PRESSED && !wall_col(player->coor[X] + cos_value * SPEED, player->coor[Y] + sin_value * SPEED))
 	{
 		player->coor[X] += cos_value * SPEED;
 		player->coor[Y] += sin_value * SPEED;
 	}
-	if (player->s == PRESSED) // && !wall_col(player->coor[X] - sin_value * SPEED, player->coor[Y] - cos_value * SPEED))
+	if (player->s == PRESSED && !wall_col(player->coor[X] - cos_value * SPEED, player->coor[Y] - sin_value * SPEED))
 	{
 		player->coor[X] -= cos_value * SPEED;
 		player->coor[Y] -= sin_value * SPEED;
 	}
-	if (player->a == PRESSED) // && !wall_col(player->coor[X] + cos_value * SPEED, player->coor[Y] - sin_value * SPEED))
+	if (player->a == PRESSED && !wall_col(player->coor[X] + sin_value * SPEED, player->coor[Y] - cos_value * SPEED))
 	{
-		player->coor[X] += cos_value * SPEED;
-		player->coor[Y] -= sin_value * SPEED;
+		player->coor[X] += sin_value * SPEED;
+		player->coor[Y] -= cos_value * SPEED;
 	}
-	if (player->d == PRESSED) // && !wall_col(player->coor[X] - cos_value * SPEED, player->coor[Y] + sin_value * SPEED))
+	if (player->d == PRESSED && !wall_col(player->coor[X] - sin_value * SPEED, player->coor[Y] + cos_value * SPEED))
 	{
-		player->coor[X] -= cos_value * SPEED;
-		player->coor[Y] += sin_value * SPEED;
+		player->coor[X] -= sin_value * SPEED;
+		player->coor[Y] += cos_value * SPEED;
 	}
 }
 
 int	game_loop(t_data *data)
 {
 	int i = 0;
+	move_player(&data->player);
+	clear_screen();
 	float div = PI / 3 / WIN_WIDTH;
 	float start_x = data->player.view - PI / 6;
-	clear_screen();
-	move_player(&data->player);
-	// draw_square(data->player.coor[X], data->player.coor[Y], 0xFF0000, 15);
-	// draw_map();
+	if (DEBUG)
+	{
+		draw_square(data->player.coor[X], data->player.coor[Y], 0xFF0000, 15);
+		draw_map();
+	}
 	while (i < WIN_WIDTH)
 	{
 		draw_fov(start_x, i);

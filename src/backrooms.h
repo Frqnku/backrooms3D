@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/29 15:56:29 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:40:48 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx/mlx.h>
+# include <mlx/mlx_int.h>
 # include <stdio.h>
 # include <stdlib.h>
 
@@ -38,7 +39,7 @@ typedef struct s_player
 	key			d;
 	key			l_arr;
 	key			r_arr;
-	
+
 	float		view;
 }				t_player;
 
@@ -53,9 +54,14 @@ typedef struct s_map
 
 typedef struct s_texture
 {
+	char		*addr;
+	void		*spr;
 	char		*path;
 	char		*orientation;
 	int			index;
+	int			bits_pr_pxl;
+	int			line_length;
+	int			endian;
 }				t_texture;
 
 typedef struct s_color
@@ -84,6 +90,7 @@ typedef struct s_data
 }				t_data;
 
 extern t_data	g_data;
+extern int		spr_size;
 
 /* Defined error */
 # define BADARG1 "too few arguments: use ./cub3D <path_to_map>"
@@ -125,16 +132,18 @@ extern t_data	g_data;
 # define PI 3.14159265359
 # define PRESSED 1
 # define RELEASED 0
-# define SPEED 3
+# define SPEED 1
+# define ROTATE_SPEED 0.01
 
 /* Map infos */
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define MAX_ROW 4095
 # define MAX_ROW_MAP 2046
 
 /* Game infos */
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1280
+# define WIN_HEIGHT 720
+# define DEBUG 0
 
 /* Cleanup */
 void			cleanup(void);
