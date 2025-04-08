@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/04 09:40:48 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:52:59 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ typedef struct s_map
 
 typedef struct s_texture
 {
-	char		*addr;
 	void		*spr;
 	char		*path;
 	char		*orientation;
 	int			index;
-	int			bits_pr_pxl;
-	int			line_length;
+	int			bpp;
+	int			size_line;
 	int			endian;
+	int			width;
+	int			height;
+	char		*data;
 }				t_texture;
 
 typedef struct s_color
@@ -136,9 +138,15 @@ extern int		spr_size;
 # define ROTATE_SPEED 0.01
 
 /* Map infos */
+# define VER_TOUCH 1
+# define HOR_TOUCH 2
 # define TILE_SIZE 32
 # define MAX_ROW 4095
 # define MAX_ROW_MAP 2046
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
 
 /* Game infos */
 # define WIN_WIDTH 1280
@@ -175,5 +183,30 @@ int				is_orientation(char c);
 int				is_floor(char c);
 int				is_wall(char c);
 int				tblotbl_len(char **tbl);
+
+/* Draw */
+void			draw_square(int x, int y, int color, int size);
+void			draw_map(void);
+void			clear_screen(void);
+void			draw_fov(float start_x, int i);
+u_int32_t		*get_pixel(t_texture *img, int ray_x, int ray_y);
+
+/* Inits */
+void			init_textures(void);
+void			init_data(int ac, char **av);
+
+/* Inputs */
+int				destroy_game(t_data *data);
+int				on_keypress(int input, t_data *data);
+int				on_keyrelease(int input, t_data *data);
+
+/* Main */
+
+void			find_spawn_coor(void);
+int				wall_col(float obj_x, float obj_y, float start_x);
+void			put_pixel(int x, int y, int color);
+float			find_norm(float x1, float x2, float y1, float y2);
+void			move_player(t_player *player);
+int				game_loop(t_data *data);
 
 #endif

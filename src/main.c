@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:20:26 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/04 09:40:58 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:55:49 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,62 +42,7 @@ void find_spawn_coor()
 	}
 }
 
-int	destroy_game(t_data *data)
-{
-	cleanup();
-	if (data->mlx)
-	{
-		if (data->mlx_img)
-			mlx_destroy_image(data->mlx, data->mlx_img);
-		if (data->mlx_window)
-			mlx_destroy_window(data->mlx, data->mlx_window);
-		if (data->mlx)
-		{
-			mlx_destroy_display(data->mlx);
-			free(data->mlx);
-		}
-	}
-	exit(1);
-	return (0);
-}
-
-int on_keypress(int input, t_data *data)
-{
-	if (input == KEY_ESC)	
-		destroy_game(data);
-	if (input == KEY_W)
-		data->player.w = PRESSED;
-	if (input == KEY_S)
-		data->player.s = PRESSED;
-	if (input == KEY_A)
-		data->player.a = PRESSED;
-	if (input == KEY_D)
-		data->player.d = PRESSED;
-	if (input == ARROW_LEFT)
-		data->player.l_arr = PRESSED;
-	if (input == ARROW_RIGHT)
-		data->player.r_arr = PRESSED;
-	return (0);
-}
-
-int on_keyrelease(int input, t_data *data)
-{
-	if (input == KEY_W)
-		data->player.w = RELEASED;
-	if (input == KEY_S)
-		data->player.s = RELEASED;
-	if (input == KEY_A)
-		data->player.a = RELEASED;
-	if (input == KEY_D)
-		data->player.d = RELEASED;
-	if (input == ARROW_LEFT)
-		data->player.l_arr = RELEASED;
-	if (input == ARROW_RIGHT)
-		data->player.r_arr = RELEASED;
-	return (0);
-}
-
-int wall_col(float obj_x, float obj_y)
+int wall_col(float obj_x, float obj_y, float start_x)
 {
 	int scaled_x;
 	int scaled_y;
@@ -106,8 +51,10 @@ int wall_col(float obj_x, float obj_y)
 	scaled_y = obj_y / TILE_SIZE;
 	if (g_data.map.map[scaled_y][scaled_x] == '1')
 	{	
-		//printf("scx: %d | scy: %d\n", scaled_x, scaled_y);
-		//printf("x: %f | y: %f\n", obj_x - scaled_x * TILE_SIZE, obj_y - scaled_y * TILE_SIZE);
+		if (g_data.map.map[(int)(obj_y - sin(start_x)) / TILE_SIZE][scaled_x] == '0')
+			return (VER_TOUCH);
+		else if (g_data.map.map[scaled_y][(int)(obj_x - cos(start_x)) / TILE_SIZE] == '0')
+			return (HOR_TOUCH);
 		return (1);
 	}
 	return (0);
@@ -124,108 +71,6 @@ void put_pixel(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void init_textures()
-{
-	g_data.textures[0].spr = mlx_xpm_file_to_image(g_data.mlx, g_data.textures[0].path, &spr_size, &spr_size);
-	if (g_data.textures[0].spr == NULL)
-		cleanup();
-	g_data.textures[0].addr = mlx_get_data_addr(g_data.textures[0].spr, &g_data.textures[0].bits_pr_pxl, &g_data.textures[0].line_length, &g_data.textures[0].endian);
-	if (g_data.textures[0].addr == NULL)
-		cleanup();
-}
-
-void init_data(int ac, char **av)
-{
-	check_args(ac, av);
-	find_spawn_coor();
-	g_data.player.w = RELEASED;
-	g_data.player.s = RELEASED;
-	g_data.player.a = RELEASED;
-	g_data.player.d = RELEASED;
-	g_data.player.l_arr = RELEASED;
-	g_data.player.r_arr = RELEASED;
-	g_data.player.view = PI / 3 * 2;
-	g_data.mlx = NULL;
-	g_data.mlx_window = NULL;
-	g_data.mlx_img = NULL;
-	g_data.screen = NULL;
-	g_data.bits_pr_pxl = 0;
-	g_data.line_length = 0;
-	g_data.endian = 0;
-	g_data.mlx = mlx_init();
-	init_textures();
-	if (!g_data.mlx)
-		destroy_game(&g_data);
-	g_data.mlx_window = mlx_new_window(g_data.mlx, WIN_WIDTH, WIN_HEIGHT,
-			"Backrooms 3D");
-	if (!g_data.mlx_window)
-		destroy_game(&g_data);
-	g_data.mlx_img = mlx_new_image(g_data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!g_data.mlx_img)
-		destroy_game(&g_data);
-	g_data.screen = mlx_get_data_addr(g_data.mlx_img, &g_data.bits_pr_pxl, &g_data.line_length, &g_data.endian);	
-	mlx_put_image_to_window(g_data.mlx, g_data.mlx_window, g_data.mlx_img, 0, 0);
-}
-
-void draw_square(int x, int y, int color, int size)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < size)
-	{
-		put_pixel(x + i, y + j, color);
-		i++;
-	}
-	while (j < size)
-	{
-		put_pixel(x, y + j, color);
-		put_pixel(x + i - 1, y + j, color);
-		j++;
-	}
-	i = 0;
-	while (i < size)
-	{
-		put_pixel(x + i, y + j - 1, color);
-		i++;
-	}
-}
-
-void draw_map()
-{
-	int i;
-	int j;
-	int len;
-
-	i = -1;
-	j = -1;
-	len = tblotbl_len(g_data.map.map);
-	while (++i < len)
-	{	
-		while (++j < ft_strlen(g_data.map.map[i]))
-			if (g_data.map.map[i][j] == '1')
-				draw_square(j * TILE_SIZE, i * TILE_SIZE, 0x00FF00, TILE_SIZE);
-		j = -1;
-	}
-}
-
-void clear_screen()
-{
-	int i;
-	int j;
-	
-	i = -1;
-	j = -1;
-	while (++i < WIN_HEIGHT)
-	{
-		while (++j < WIN_WIDTH)
-			put_pixel(j, i, 0x000000);
-		j = -1;
-	}
-}
-
 float find_norm(float x1, float x2, float y1, float y2)
 {
 	float delta_x;
@@ -238,48 +83,6 @@ float find_norm(float x1, float x2, float y1, float y2)
 	view = atan2(delta_y, delta_x) - g_data.player.view;
 	fixed_norm = sqrt(delta_x * delta_x + delta_y * delta_y) * cos(view);
 	return (fixed_norm);
-}
-
-void draw_fov(float start_x, int i)
-{
-	float cos_value;
-	float sin_value;
-	float ray_x;
-	float ray_y;
-	float norm;
-	float height;
-	float start_y;
-	float end;
-	
-	cos_value = cos(start_x);
-	sin_value = sin(start_x);
-	ray_x = g_data.player.coor[X];
-	ray_y = g_data.player.coor[Y];
-	while (!wall_col(ray_x, ray_y))
-	{	
-		if (DEBUG)
-			put_pixel(ray_x, ray_y, 0x0000FF);
-		ray_x += cos_value;
-		ray_y += sin_value;
-	}
-	norm = find_norm(g_data.player.coor[X], ray_x, g_data.player.coor[Y], ray_y);
-	height = TILE_SIZE / norm * (WIN_WIDTH / 1.1);
-	start_y =  (WIN_HEIGHT - height) / 2;
-	end = start_y + height;
-	while (start_y < end)
-	{
-		//printf("%d\n", ((int)start_y) % 32);
-		if (!DEBUG)
-		{
-			// if (start_y < 0)
-			// 	put_pixel(i, start_y, *(int *)(g_data.textures[0].addr + (0 * g_data.textures[0].line_length + i / 32 * (g_data.textures[0].bits_pr_pxl / 8))));
-			// else
-			// 	put_pixel(i, start_y, *(int *)(g_data.textures[0].addr + ((int)start_y % 32 * g_data.textures[0].line_length + i % 32 * (g_data.textures[0].bits_pr_pxl / 8))));
-			put_pixel(i, start_y, 0xFF0000);
-		}
-		start_y++;
-	}
-	
 }
 
 void move_player(t_player *player)
@@ -297,22 +100,22 @@ void move_player(t_player *player)
 		player->view = 0;
 	if (player->view < 0)
 		player->view = 2 * PI;
-	if (player->w == PRESSED && !wall_col(player->coor[X] + cos_value * SPEED, player->coor[Y] + sin_value * SPEED))
+	if (player->w == PRESSED && !wall_col(player->coor[X] + cos_value * SPEED, player->coor[Y] + sin_value * SPEED, 0))
 	{
 		player->coor[X] += cos_value * SPEED;
 		player->coor[Y] += sin_value * SPEED;
 	}
-	if (player->s == PRESSED && !wall_col(player->coor[X] - cos_value * SPEED, player->coor[Y] - sin_value * SPEED))
+	if (player->s == PRESSED && !wall_col(player->coor[X] - cos_value * SPEED, player->coor[Y] - sin_value * SPEED, 0))
 	{
 		player->coor[X] -= cos_value * SPEED;
 		player->coor[Y] -= sin_value * SPEED;
 	}
-	if (player->a == PRESSED && !wall_col(player->coor[X] + sin_value * SPEED, player->coor[Y] - cos_value * SPEED))
+	if (player->a == PRESSED && !wall_col(player->coor[X] + sin_value * SPEED, player->coor[Y] - cos_value * SPEED, 0))
 	{
 		player->coor[X] += sin_value * SPEED;
 		player->coor[Y] -= cos_value * SPEED;
 	}
-	if (player->d == PRESSED && !wall_col(player->coor[X] - sin_value * SPEED, player->coor[Y] + cos_value * SPEED))
+	if (player->d == PRESSED && !wall_col(player->coor[X] - sin_value * SPEED, player->coor[Y] + cos_value * SPEED, 0))
 	{
 		player->coor[X] -= sin_value * SPEED;
 		player->coor[Y] += cos_value * SPEED;
