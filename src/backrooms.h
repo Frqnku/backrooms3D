@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/08 16:52:59 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:16:03 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_color
 	int			red;
 	int			green;
 	int			blue;
+	int			color;
 	int			index;
 }				t_color;
 
@@ -134,13 +135,17 @@ extern int		spr_size;
 # define PI 3.14159265359
 # define PRESSED 1
 # define RELEASED 0
-# define SPEED 1
+# define SPEED 10
 # define ROTATE_SPEED 0.01
 
 /* Map infos */
+# define NORTH 1
+# define SOUTH 2
+# define WEST 3
+# define EAST 4
 # define VER_TOUCH 1
 # define HOR_TOUCH 2
-# define TILE_SIZE 32
+# define TILE_SIZE 160
 # define MAX_ROW 4095
 # define MAX_ROW_MAP 2046
 # define NO 0
@@ -151,7 +156,7 @@ extern int		spr_size;
 /* Game infos */
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
-# define DEBUG 0
+# define DEBUG 1
 
 /* Cleanup */
 void			cleanup(void);
@@ -183,6 +188,7 @@ int				is_orientation(char c);
 int				is_floor(char c);
 int				is_wall(char c);
 int				tblotbl_len(char **tbl);
+int				is_in_charset(char c, const char *charset);
 
 /* Draw */
 void			draw_square(int x, int y, int color, int size);

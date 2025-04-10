@@ -1,0 +1,16 @@
+NO textures/enemy_sprite.xpm      
+SO textures/enemy_sprite.xpm  
+WE textures/player_spr_right.xpm
+EA textures/player_spr_right.xpm 
+
+F 0, 0, 0
+C 0, 0, 0
+
+
+  111
+ 1101
+11001
+1E001
+11001
+ 1101
+  111        

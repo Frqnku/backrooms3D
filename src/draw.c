@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:13 by khadj-me          #+#    #+#             */
-/*   Updated: 2025/04/08 16:53:19 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:02:31 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,21 +100,25 @@ void draw_fov(float start_x, int i)
 		ray_x += cos_value;
 		ray_y += sin_value;
 	}
-	col = wall_col(ray_x, ray_y, start_x);
 	norm = find_norm(g_data.player.coor[X], ray_x, g_data.player.coor[Y], ray_y);
-	height = TILE_SIZE / norm * (WIN_WIDTH / 2);
+	height = TILE_SIZE / norm * (WIN_WIDTH / 1.5);
 	start_y =  (WIN_HEIGHT - height) / 2;
 	end = start_y + height;
+	while (col < start_y)
+		put_pixel(i, col++, g_data.colors[0].color);
+	col = wall_col(ray_x, ray_y, start_x);
 	while (start_y < end)
 	{
 		if (!DEBUG)
 		{
-			if (col == VER_TOUCH)
-				put_pixel(i, start_y, *get_pixel(&g_data.textures[3], fmodf(ray_x * (32 / TILE_SIZE), 32), (start_y - (WIN_HEIGHT / 2.0) + (height / 2)) * 32 / height));
+			if (col == NORTH || col == SOUTH)
+				put_pixel(i, start_y, *get_pixel(&g_data.textures[col - 1], fmodf(ray_x * (TILE_SIZE / TILE_SIZE), TILE_SIZE), (start_y - (WIN_HEIGHT / 2.0) + (height / 2)) * TILE_SIZE / height));
 			else
-				put_pixel(i, start_y, *get_pixel(&g_data.textures[3], fmodf(ray_y * (32 / TILE_SIZE), 32), (start_y - (WIN_HEIGHT / 2.0) + (height / 2)) * 32 / height));
+				put_pixel(i, start_y, *get_pixel(&g_data.textures[col - 1], fmodf(ray_y * (TILE_SIZE / TILE_SIZE), TILE_SIZE), (start_y - (WIN_HEIGHT / 2.0) + (height / 2)) * TILE_SIZE / height));
 		}
 		start_y++;
 	}
+	while (end < WIN_HEIGHT)
+		put_pixel(i, end++, g_data.colors[1].color);
 	
 }

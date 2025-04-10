@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_colors.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utiberto <utiberto@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:31:01 by utiberto          #+#    #+#             */
-/*   Updated: 2025/03/08 14:43:19 by utiberto         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:11:05 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	parse_colors(t_color *color, char *str)
 	color->red = ft_atoi(values[0]);
 	color->green = ft_atoi(values[1]);
 	color->blue = ft_atoi(values[2]);
+	color->color = color->red << 16 | color->green << 8 | color->blue;
 	free_split(values);
 }
 

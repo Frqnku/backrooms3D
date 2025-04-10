@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:43:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/04 15:57:21 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:07:52 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ static t_texture	add_texture(char *orientation, int i, int j)
 {
 	t_texture	texture;
 
+	texture.data = NULL;
+	texture.width = TILE_SIZE;
+	texture.height = TILE_SIZE;
+	texture.bpp = 0;
+	texture.size_line = 0;
+	texture.endian = 0;
+	texture.spr = NULL;
 	texture.index = i;
 	texture.path = NULL;
 	texture.orientation = NULL;
@@ -41,13 +48,6 @@ static t_texture	find_texture(char *orientation)
 	int			j;
 
 	i = 0;
-	texture.data = NULL;
-	texture.width = 32;
-	texture.height = 32;
-	texture.bpp = 0;
-	texture.size_line = 0;
-	texture.endian = 0;
-	texture.spr = NULL;
 	texture.path = NULL;
 	texture.orientation = NULL;
 	texture.index = -1;

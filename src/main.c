@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:20:26 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/08 16:55:49 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:25:13 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,19 @@
 #include <stdio.h>
 
 t_data	g_data;
-int 	spr_size = 32;
+int 	spr_size = TILE_SIZE;
+
+static void init_view(int i, int j, char **map)
+{
+	if (map[i][j] == 'N')
+		g_data.player.view = (PI / 2) * 3;
+	else if (map[i][j] == 'S')
+		g_data.player.view = PI / 2;
+	else if (map[i][j] == 'E')
+		g_data.player.view = 0;
+	else if (map[i][j] == 'W')
+		g_data.player.view = PI;
+}
 
 void find_spawn_coor()
 {
@@ -30,13 +42,13 @@ void find_spawn_coor()
 	{
 		while (++j < ft_strlen(map[i]))
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'O' || map[i][j] == 'E')
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' || map[i][j] == 'E')
 			{
 				g_data.player.coor[X] = j * TILE_SIZE;		
 				g_data.player.coor[Y] = i * TILE_SIZE;
+				init_view(i, j, map);
 				break ;
 			}
-			j++;
 		}
 		j = -1;
 	}
@@ -51,10 +63,20 @@ int wall_col(float obj_x, float obj_y, float start_x)
 	scaled_y = obj_y / TILE_SIZE;
 	if (g_data.map.map[scaled_y][scaled_x] == '1')
 	{	
-		if (g_data.map.map[(int)(obj_y - sin(start_x)) / TILE_SIZE][scaled_x] == '0')
-			return (VER_TOUCH);
-		else if (g_data.map.map[scaled_y][(int)(obj_x - cos(start_x)) / TILE_SIZE] == '0')
-			return (HOR_TOUCH);
+		if (is_in_charset(g_data.map.map[(int)(obj_y - sin(start_x)) / TILE_SIZE][scaled_x], "0NSEW") == 1)
+		{
+			if (sin(start_x) < 0)
+				return (/*printf("SOUTH\n"),*/ SOUTH);
+			else
+				return (/*printf("NORTH\n"),*/ NORTH);
+		}
+		else if (is_in_charset(g_data.map.map[scaled_y][(int)(obj_x - cos(start_x)) / TILE_SIZE], "0NSEW") == 1)
+		{
+			if (cos(start_x) < 0)
+				return (/*printf("EAST\n"),*/ EAST);
+			else
+				return (/*printf("WEST\n"),*/ WEST);
+		}
 		return (1);
 	}
 	return (0);
