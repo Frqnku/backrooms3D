@@ -23,7 +23,7 @@ LIBFT = libft/libft.a
 MLX = mlx/libmlx_Linux.a
 
 # Flags
-CFLAGS = # -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -ffast-math -lXext -lX11 -lm -lz -lbsd
 
 # Rules	

@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:31:01 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/10 11:11:05 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:16:42 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,12 @@ static void	parse_colors(t_color *color, char *str)
 	i = -1;
 	while (values[++i])
 	{
-		j = 0;
-		if (!values[i][j])
+		j = -1;
+		if (!values[i][0])
 			(free_split(values), handle_colors_error(BADCOLOR));
-		while (values[i][j])
-		{
+		while (values[i][++j])
 			if (!ft_isdigit(values[i][j]) && !is_whitespace(values[i][j]))
 				(free_split(values), handle_colors_error(BADCOLOR));
-			j++;
-		}
 	}
 	color->red = ft_atoi(values[0]);
 	color->green = ft_atoi(values[1]);

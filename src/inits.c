@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:16:06 by khadj-me          #+#    #+#             */
-/*   Updated: 2025/04/11 11:45:11 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:47:18 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	find_spawn_coor(void)
 	len = tblotbl_len(map);
 	while (++i < len)
 	{
-		while (++j < ft_strlen(map[i]))
+		while (++j < (int)ft_strlen(map[i]))
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W'
 				|| map[i][j] == 'E')
 			{
-				g_data.player.coor[X] = j * TILE_SIZE;
-				g_data.player.coor[Y] = i * TILE_SIZE;
+				g_data.player.coor[X] = j * TILE_SIZE + TILE_SIZE / 2;
+				g_data.player.coor[Y] = i * TILE_SIZE + TILE_SIZE / 2;
 				init_view(i, j, map);
 				break ;
 			}

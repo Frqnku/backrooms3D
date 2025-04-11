@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:42:01 by khadj-me          #+#    #+#             */
-/*   Updated: 2025/04/11 11:53:57 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:33:55 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_in_charset(char c, const char *charset)
 	return (0);
 }
 
-int	wall_col(float obj_x, float obj_y, float start_x)
+int	wall_col(double obj_x, double obj_y, double start_x)
 {
 	int	scaled_x;
 	int	scaled_y;
@@ -74,12 +74,12 @@ void	put_pixel(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-float	find_norm(float x1, float x2, float y1, float y2)
+double	find_norm(double x1, double x2, double y1, double y2)
 {
-	float	delta_x;
-	float	delta_y;
-	float	view;
-	float	fixed_norm;
+	double	delta_x;
+	double	delta_y;
+	double	view;
+	double	fixed_norm;
 
 	delta_x = x2 - x1;
 	delta_y = y2 - y1;

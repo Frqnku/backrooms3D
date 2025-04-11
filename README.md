@@ -1,4 +1,4 @@
-make double instead of floats
+make double instead of doubles
 
 
 tests failed

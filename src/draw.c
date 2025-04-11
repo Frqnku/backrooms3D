@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:13:13 by khadj-me          #+#    #+#             */
-/*   Updated: 2025/04/11 15:33:28 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:47:36 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	draw_map(void)
 	len = tblotbl_len(g_data.map.map);
 	while (++i < len)
 	{
-		while (++j < ft_strlen(g_data.map.map[i]))
+		while (++j < (int)ft_strlen(g_data.map.map[i]))
 			if (g_data.map.map[i][j] == '1')
 				draw_square(j * TILE_SIZE, i * TILE_SIZE, 0x00FF00, TILE_SIZE);
 		j = -1;
@@ -76,10 +76,10 @@ u_int32_t	*get_pixel(t_texture *img, int ray_x, int ray_y)
 	return ((u_int32_t *)img->data + ray_y * (img->size_line / 4) + ray_x);
 }
 
-void	draw_fov(float start_x, int i)
+void	draw_fov(double start_x, int i)
 {
 	t_fov	fov;
-	float	start_y;
+	double	start_y;
 
 	fov.ray_x = g_data.player.coor[X];
 	fov.ray_y = g_data.player.coor[Y];
@@ -88,7 +88,6 @@ void	draw_fov(float start_x, int i)
 			g_data.player.coor[Y], fov.ray_y) * (WIN_WIDTH / 1.5);
 	start_y = (WIN_HEIGHT - fov.height) / 2;
 	fov.end = start_y + fov.height;
-	draw_loop(start_x, start_y, i, &fov);
-	while (fov.end < WIN_HEIGHT)
-		put_pixel(i, (fov.end)++, g_data.colors[1].color);
+	if (!DEBUG)
+		draw_loop(start_x, start_y, i, &fov);
 }

@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/11 11:55:42 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:31:44 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ typedef int		t_key;
 
 typedef struct s_fov
 {
-	float		height;
-	float		end;
-	float		ray_x;
-	float		ray_y;
+	double		height;
+	double		end;
+	double		ray_x;
+	double		ray_y;
 }				t_fov;
 
 typedef struct s_player
 {
-	float		coor[2];
+	double		coor[2];
 	t_key		w;
 	t_key		s;
 	t_key		a;
@@ -48,7 +48,7 @@ typedef struct s_player
 	t_key		l_arr;
 	t_key		r_arr;
 
-	float		view;
+	double		view;
 }				t_player;
 
 typedef struct s_map
@@ -195,20 +195,20 @@ int				is_orientation(char c);
 int				is_floor(char c);
 int				is_wall(char c);
 void			put_pixel(int x, int y, int color);
-float			find_norm(float x1, float x2, float y1, float y2);
-int				wall_col(float obj_x, float obj_y, float start_x);
+double			find_norm(double x1, double x2, double y1, double y2);
+int				wall_col(double obj_x, double obj_y, double start_x);
 int				tblotbl_len(char **tbl);
 int				is_in_charset(char c, const char *charset);
 
 /* Draw_Fov_Loops */
-void			col_loop(float start_x, float *ray_x, float *ray_y);
-void			draw_loop(float start_x, float start_y, int i, t_fov *fov);
+void			col_loop(double start_x, double *ray_x, double *ray_y);
+void			draw_loop(double start_x, double start_y, int i, t_fov *fov);
 
 /* Draw */
 void			draw_square(int x, int y, int color, int size);
 void			draw_map(void);
 void			clear_screen(void);
-void			draw_fov(float start_x, int i);
+void			draw_fov(double start_x, int i);
 u_int32_t		*get_pixel(t_texture *img, int ray_x, int ray_y);
 
 /* Inits */
@@ -224,9 +224,9 @@ int				on_keyrelease(int input, t_data *data);
 /* Main */
 
 void			find_spawn_coor(void);
-int				wall_col(float obj_x, float obj_y, float start_x);
+int				wall_col(double obj_x, double obj_y, double start_x);
 void			put_pixel(int x, int y, int color);
-float			find_norm(float x1, float x2, float y1, float y2);
+double			find_norm(double x1, double x2, double y1, double y2);
 void			move_player(t_player *player);
 int				game_loop(t_data *data);
 

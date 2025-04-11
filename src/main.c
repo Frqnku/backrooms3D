@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:20:26 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/11 15:32:57 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:33:55 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_data		g_data;
 
-static void	player_inputs(t_player *player, float cos_value, float sin_value)
+static void	player_inputs(t_player *player, double cos_value, double sin_value)
 {
 	if (player->w == PRESSED && !wall_col(player->coor[X] + cos_value * SPEED,
 			player->coor[Y] + sin_value * SPEED, 0))
@@ -45,8 +45,8 @@ static void	player_inputs(t_player *player, float cos_value, float sin_value)
 
 void	move_player(t_player *player)
 {
-	float	cos_value;
-	float	sin_value;
+	double	cos_value;
+	double	sin_value;
 
 	cos_value = cos(player->view);
 	sin_value = sin(player->view);
@@ -64,8 +64,8 @@ void	move_player(t_player *player)
 int	game_loop(t_data *data)
 {
 	int		i;
-	float	div;
-	float	start_x;
+	double	div;
+	double	start_x;
 
 	i = 0;
 	move_player(&data->player);
