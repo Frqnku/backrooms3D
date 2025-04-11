@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:29:05 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/10 15:16:03 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:55:42 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,25 @@
 #  define BONUS 0
 # endif
 
-typedef int		key;
+typedef int		t_key;
+
+typedef struct s_fov
+{
+	float		height;
+	float		end;
+	float		ray_x;
+	float		ray_y;
+}				t_fov;
 
 typedef struct s_player
 {
 	float		coor[2];
-	key			w;
-	key			s;
-	key			a;
-	key			d;
-	key			l_arr;
-	key			r_arr;
+	t_key		w;
+	t_key		s;
+	t_key		a;
+	t_key		d;
+	t_key		l_arr;
+	t_key		r_arr;
 
 	float		view;
 }				t_player;
@@ -93,7 +101,6 @@ typedef struct s_data
 }				t_data;
 
 extern t_data	g_data;
-extern int		spr_size;
 
 /* Defined error */
 # define BADARG1 "too few arguments: use ./cub3D <path_to_map>"
@@ -136,7 +143,7 @@ extern int		spr_size;
 # define PRESSED 1
 # define RELEASED 0
 # define SPEED 10
-# define ROTATE_SPEED 0.01
+# define ROTATE_SPEED 0.02
 
 /* Map infos */
 # define NORTH 1
@@ -156,7 +163,7 @@ extern int		spr_size;
 /* Game infos */
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
-# define DEBUG 1
+# define DEBUG 0
 
 /* Cleanup */
 void			cleanup(void);
@@ -187,8 +194,15 @@ void			check_orientation(char **map);
 int				is_orientation(char c);
 int				is_floor(char c);
 int				is_wall(char c);
+void			put_pixel(int x, int y, int color);
+float			find_norm(float x1, float x2, float y1, float y2);
+int				wall_col(float obj_x, float obj_y, float start_x);
 int				tblotbl_len(char **tbl);
 int				is_in_charset(char c, const char *charset);
+
+/* Draw_Fov_Loops */
+void			col_loop(float start_x, float *ray_x, float *ray_y);
+void			draw_loop(float start_x, float start_y, int i, t_fov *fov);
 
 /* Draw */
 void			draw_square(int x, int y, int color, int size);
@@ -198,6 +212,7 @@ void			draw_fov(float start_x, int i);
 u_int32_t		*get_pixel(t_texture *img, int ray_x, int ray_y);
 
 /* Inits */
+void			find_spawn_coor(void);
 void			init_textures(void);
 void			init_data(int ac, char **av);
 

@@ -15,7 +15,7 @@ UTILS = $(addprefix utils/, handle_errors.c cleanup.c utils.c )
 PARSING = $(addprefix parsing/, check_args.c check_file.c check_map.c check_textures.c initialize_textures_paths.c check_file_chars.c initialize_colors.c check_colors.c check_map2.c utils.c)
 RENDER = 
 GAMEPLAY = 
-SRCS = $(addprefix src/, main.c inits.c draw.c inputs.c $(UTILS) $(PARSING) $(RENDER) $(GAMEPLAY))
+SRCS = $(addprefix src/, main.c inits.c draw.c inputs.c draw_fov_loops.c $(UTILS) $(PARSING) $(RENDER) $(GAMEPLAY))
 OBJS = $(SRCS:.c=.o)
 
 # Archive

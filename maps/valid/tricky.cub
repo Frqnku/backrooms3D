@@ -1,16 +1,16 @@
-NO textures/enemy_sprite.xpm      
-SO textures/enemy_sprite.xpm  
-WE textures/player_spr_right.xpm
-EA textures/player_spr_right.xpm 
+NO textures/SW-WALL.xpm      
+SO textures/SW-WALL.xpm  
+WE textures/NE-WALL.xpm 
+EA textures/NE-WALL.xpm 
 
 F 0, 0, 0
 C 0, 0, 0
 
 
   111
- 1101
+ 11N1
 11001
-1E001
+10001
 11001
  1101
   111        

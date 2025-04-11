@@ -6,7 +6,7 @@
 /*   By: khadj-me <khalilhadjmes1@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:37:33 by utiberto          #+#    #+#             */
-/*   Updated: 2025/04/08 16:30:25 by khadj-me         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:35:45 by khadj-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	check_valid_textures(void)
 		fd = open(g_data.textures[i].path, O_RDONLY);
 		if (fd == -1)
 			handle_textures_error(BADTEXTURE);
-
 		close(fd);
 		i++;
 	}
